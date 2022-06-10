@@ -50,8 +50,8 @@ runs:
 
         set -x
 
-        echo "Switching working directory to action root ..."
-        cd $GITHUB_ACTION_PATH
+        # echo "Switching working directory to action root ..."
+        # cd $GITHUB_ACTION_PATH
 
         echo "Detecting operating system ..."
         PLATFORM=""
@@ -77,11 +77,12 @@ runs:
           exit 1
         fi
         curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o $GITHUB_ACTION_PATH/drone-telegram
-        chmod +x drone-telegram
+        chmod +x $GITHUB_ACTION_PATH/drone-telegram
 
         echo "Launching drone-telegram ..."
-        ls -lah
-        ./entrypoint.sh
+        ls -lah . $GITHUB_ACTION_PATH
+        # ./entrypoint.sh
+        exec $GITHUB_ACTION_PATH/entrypoint.sh
       shell: bash
 
 ## TODO: Customize?

@@ -2,6 +2,10 @@
 
 set -eu
 
+# TODO: Disable these, obviously!
+set -x
+printenv
+
 export GITHUB="true"
 
 [ -n "$*" ] && export TELEGRAM_MESSAGE="$*"
