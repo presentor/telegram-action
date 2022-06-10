@@ -6,13 +6,6 @@ export GITHUB="true"
 
 [ -n "$*" ] && export TELEGRAM_MESSAGE="$*"
 
-# TODO: Disable these, obviously!
-set -x
-printenv
-
-# echo "Switching working directory to action root ..."
-# cd $GITHUB_ACTION_PATH
-
 echo "Detecting operating system ..."
 # PLATFORM=""
 case "$OSTYPE" in
@@ -40,11 +33,5 @@ curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o $GITHUB_ACTION_PATH/drone-telegram
 chmod +x $GITHUB_ACTION_PATH/drone-telegram
 
 echo "Launching drone-telegram ..."
-pwd
-ls -lah . $GITHUB_ACTION_PATH
-# ./entrypoint.sh
-# printenv
-# exec $GITHUB_ACTION_PATH/entrypoint.sh
-
 exec $GITHUB_ACTION_PATH/drone-telegram
 # ./drone-telegram
