@@ -78,10 +78,12 @@ runs:
 
     - run: |
         ## TODO: Remove once done debugging
+        set -x
         ls -lah .
         echo
 
-        ./entrypoint.sh
+        $GITHUB_ACTION_PATH/entrypoint.sh
+        # ./entrypoint.sh
       shell: bash
 
 branding:

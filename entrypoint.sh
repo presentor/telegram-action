@@ -6,4 +6,5 @@ export GITHUB="true"
 
 [ -n "$*" ] && export TELEGRAM_MESSAGE="$*"
 
-./drone-telegram
+$GITHUB_ACTION_PATH/drone-telegram
+# ./drone-telegram
