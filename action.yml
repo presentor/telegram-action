@@ -1,11 +1,12 @@
-name: 'Telegram Message Notify'
-description: 'Sending a Telegram message'
-author: 'Bo-Yi Wu'
+name: 'Telegram Action'
+description: 'Send a customizable Telegram message through GitHub Actions.'
+author: 'Bo-Yi Wu & Presentor'
+
 inputs:
-  to:
-    description: 'telegram user'
   token:
     description: 'telegram token'
+  to:
+    description: 'telegram user'
   message:
     description: 'telegram message'
   message_file:
@@ -36,9 +37,47 @@ inputs:
     description: 'disables link previews for links in this message'
   disable_notification:
     description: 'disables notifications for this message, supports sending a message without notification,'
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    # - run: brew install go
+    #   shell: bash
+
+    - run: |
+        echo "Detecting operating system ..."
+        PLATFORM=""
+        case "$OSTYPE" in
+          # solaris*) echo "SOLARIS" ;;
+          darwin*)  echo "Detected operating system: macOS"; PLATFORM="macos" ;; 
+          linux*)   echo "Detected operating system: Linux"; PLATFORM="linux" ;;
+          # bsd*)     echo "BSD" ;;
+          # msys*)    echo "WINDOWS" ;;
+          # cygwin*)  echo "ALSO WINDOWS" ;;
+          *)        echo "Unsupported operating system: $OSTYPE"; exit 1 ;;
+        esac
+        echo
+
+        echo "Preparing to download drone-telegram for $PLATFORM ..."
+        DRONE_TELEGRAM_DOWNLOAD_URL=""
+        if [[ $PLATFORM == 'macos' ]]; then
+          DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-darwin-amd64"
+        elif [[ $PLATFORM == 'linux' ]]; then
+          DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-linux-amd64"
+        else
+          echo "Unsupported PLATFORM: $PLATFORM"
+          exit 1
+        fi
+        echo
+
+        echo "Downloading drone-telegram for $PLATFORM ..."
+        curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o drone-telegram
+        chmod +x drone-telegram
+        echo
+      shell: bash
+
+    - run: entrypoint.sh
+      shell: bash
 
 branding:
   icon: 'message-square'

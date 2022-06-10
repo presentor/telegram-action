@@ -1,7 +1,11 @@
 name: telegram message
-on: [push]
+
+on: [ push ]
+
 jobs:
 
+  ## TODO: Setup matrix build jobs for both linux and macOS
+  ## TODO: Add Windows support?
   build:
     name: Build
     runs-on: ubuntu-latest

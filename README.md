@@ -1,8 +1,10 @@
 # 🚀 Telegram for GitHub Actions
 
+***NOTICE:*** *This is a **simplified fork** which aims to provide support for multiple operating systems, however not all functionality may be available yet!*
+
 [GitHub Action](https://github.com/features/actions) for sending a Telegram notification message.
 
-![notification](./images/telegram-notification.png)
+<!-- ![notification](./images/telegram-notification.png) -->
 
 [![Actions Status](https://github.com/appleboy/telegram-action/workflows/telegram%20message/badge.svg)](https://github.com/appleboy/telegram-action/actions)
 
