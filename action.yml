@@ -48,6 +48,8 @@ runs:
     - run: |
         ## TODO: If this all works, move this logic to entrypoint.sh instead?
 
+        set -x
+
         echo "Switching working directory to action root ..."
         cd $GITHUB_ACTION_PATH
 
@@ -64,7 +66,7 @@ runs:
         esac
         echo
 
-        echo "Downloading `drone-telegram` for $PLATFORM ..."
+        echo "Downloading drone-telegram for $PLATFORM ..."
         DRONE_TELEGRAM_DOWNLOAD_URL=""
         if [[ $PLATFORM == 'macOS' ]]; then
           DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-darwin-amd64"
@@ -74,10 +76,10 @@ runs:
           echo "Unsupported PLATFORM: $PLATFORM"
           exit 1
         fi
-        curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o drone-telegram
+        curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o $GITHUB_ACTION_PATH/drone-telegram
         chmod +x drone-telegram
 
-        echo "Launching `drone-telegram` ..."
+        echo "Launching drone-telegram ..."
         ls -lah
         ./entrypoint.sh
       shell: bash
