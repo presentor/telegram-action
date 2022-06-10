@@ -78,6 +78,7 @@ runs:
         chmod +x drone-telegram
 
         echo "Launching `drone-telegram` ..."
+        ls -lah
         ./entrypoint.sh
       shell: bash
 
