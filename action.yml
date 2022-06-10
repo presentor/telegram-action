@@ -2,6 +2,7 @@ name: 'Telegram Action'
 description: 'Send a customizable Telegram message through GitHub Actions.'
 author: 'Bo-Yi Wu & Presentor'
 
+## TODO: Refactor and add missing properties
 inputs:
   token:
     description: 'telegram token'
@@ -41,10 +42,15 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    # - run: brew install go
+    # - run: $GITHUB_ACTION_PATH/entrypoint.sh
     #   shell: bash
 
     - run: |
+        ## TODO: If this all works, move this logic to entrypoint.sh instead?
+
+        echo "Switching working directory to action root ..."
+        cd $GITHUB_ACTION_PATH
+
         echo "Detecting operating system ..."
         PLATFORM=""
         case "$OSTYPE" in
@@ -58,7 +64,7 @@ runs:
         esac
         echo
 
-        echo "Downloading drone-telegram for $PLATFORM ..."
+        echo "Downloading `drone-telegram` for $PLATFORM ..."
         DRONE_TELEGRAM_DOWNLOAD_URL=""
         if [[ $PLATFORM == 'macOS' ]]; then
           DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-darwin-amd64"
@@ -71,21 +77,11 @@ runs:
         curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o drone-telegram
         chmod +x drone-telegram
 
-        ## TODO: Remove once done debugging
-        echo
-        ls -lah
+        echo "Launching `drone-telegram` ..."
+        ./entrypoint.sh
       shell: bash
 
-    - run: |
-        ## TODO: Remove once done debugging
-        set -x
-        ls -lah .
-        echo
-
-        $GITHUB_ACTION_PATH/entrypoint.sh
-        # ./entrypoint.sh
-      shell: bash
-
+## TODO: Customize?
 branding:
   icon: 'message-square'
   color: 'blue'
