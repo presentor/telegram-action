@@ -82,6 +82,7 @@ runs:
         echo "Launching drone-telegram ..."
         ls -lah . $GITHUB_ACTION_PATH
         # ./entrypoint.sh
+        printenv
         exec $GITHUB_ACTION_PATH/entrypoint.sh
       shell: bash
 
