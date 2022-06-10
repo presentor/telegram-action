@@ -49,8 +49,8 @@ runs:
         PLATFORM=""
         case "$OSTYPE" in
           # solaris*) echo "SOLARIS" ;;
-          darwin*)  echo "Detected operating system: macOS"; PLATFORM="macos" ;; 
-          linux*)   echo "Detected operating system: Linux"; PLATFORM="linux" ;;
+          darwin*)  echo "Detected operating system: macOS"; PLATFORM="macOS" ;; 
+          linux*)   echo "Detected operating system: Linux"; PLATFORM="Linux" ;;
           # bsd*)     echo "BSD" ;;
           # msys*)    echo "WINDOWS" ;;
           # cygwin*)  echo "ALSO WINDOWS" ;;
@@ -58,25 +58,30 @@ runs:
         esac
         echo
 
-        echo "Preparing to download drone-telegram for $PLATFORM ..."
+        echo "Downloading drone-telegram for $PLATFORM ..."
         DRONE_TELEGRAM_DOWNLOAD_URL=""
-        if [[ $PLATFORM == 'macos' ]]; then
+        if [[ $PLATFORM == 'macOS' ]]; then
           DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-darwin-amd64"
-        elif [[ $PLATFORM == 'linux' ]]; then
+        elif [[ $PLATFORM == 'Linux' ]]; then
           DRONE_TELEGRAM_DOWNLOAD_URL="https://github.com/appleboy/drone-telegram/releases/download/v1.3.10/drone-telegram-v1.3.10-linux-amd64"
         else
           echo "Unsupported PLATFORM: $PLATFORM"
           exit 1
         fi
-        echo
-
-        echo "Downloading drone-telegram for $PLATFORM ..."
         curl -L $DRONE_TELEGRAM_DOWNLOAD_URL -o drone-telegram
         chmod +x drone-telegram
+
+        ## TODO: Remove once done debugging
         echo
+        ls -lah
       shell: bash
 
-    - run: entrypoint.sh
+    - run: |
+        ## TODO: Remove once done debugging
+        ls -lah .
+        echo
+
+        ./entrypoint.sh
       shell: bash
 
 branding:

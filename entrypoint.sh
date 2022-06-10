@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eu
 
@@ -6,4 +6,4 @@ export GITHUB="true"
 
 [ -n "$*" ] && export TELEGRAM_MESSAGE="$*"
 
-/bin/drone-telegram
+./drone-telegram
