@@ -1,6 +1,6 @@
 # 🚀 Telegram for GitHub Actions
 
-***NOTICE:*** *This is a **simplified fork** which aims to provide support for multiple operating systems, however not all functionality may be available yet!*
+***NOTICE:*** *This is a **simplified fork** which provides support for multiple operating systems, mainly Linux, macOS and Windows.*
 
 [GitHub Action](https://github.com/features/actions) for sending a Telegram notification message.
 
