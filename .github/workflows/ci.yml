@@ -3,14 +3,19 @@ name: telegram message
 on: [ push ]
 
 jobs:
-
-  ## TODO: Setup matrix build jobs for both linux and macOS
-  ## TODO: Add Windows support?
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      if: runner.os == 'Windows'
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'
     - name: send custom message with args
       uses: ./
       with:
@@ -69,24 +74,6 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message_file: tests/message.txt
-
-    # - name: send message using socks5 proxy URL
-    #   uses: appleboy/telegram-action@master
-    #   with:
-    #     to: ${{ secrets.TELEGRAM_TO }}
-    #     token: ${{ secrets.TELEGRAM_TOKEN }}
-    #     socks5: "http://222.124.154.19:23500"
-    #     message: Send message from socks5 proxy URL.
-
-    # - name: try multiple message
-    #   uses: appleboy/telegram-action@master
-    #   with:
-    #     to: ${{ secrets.TELEGRAM_TO }}
-    #     token: ${{ secrets.TELEGRAM_TOKEN }}
-    #     format: html
-    #     message: |
-    #       ⚡️ <a href="https://github.com/aszenz/repo/commit/${{ github.event.push.after }}">Commits</a> pushed to master by <em>${{ github.event.push.pusher.name }}</em> ⚡️
-    #       ${{ github.actor }}:${{ github.event.head_commit.message }}
 
     - name: link preview
       uses: ./
