@@ -2,7 +2,6 @@ name: 'Telegram Action'
 description: 'Send a customizable Telegram message through GitHub Actions.'
 author: 'Bo-Yi Wu & Presentor'
 
-## TODO: Refactor and add missing properties
 inputs:
   token:
     description: 'telegram token'
